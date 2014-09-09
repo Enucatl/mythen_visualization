@@ -40,7 +40,7 @@ if __name__ == '__main__':
         for file_name in file_names])
     print(datasets)
     plt.figure()
-    plt.imshow(datasets, interpolation="none")
+    plt.imshow(datasets, interpolation="none", aspect='auto')
     plt.tight_layout()
     plt.figure()
     integrals = [np.sum(dataset) for dataset in datasets]
