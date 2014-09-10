@@ -2,6 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import glob
+import h5py
 
 import argparse
 
@@ -9,15 +10,15 @@ parser = argparse.ArgumentParser(
     __doc__,
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument(
-    "folder",
+    "file",
     nargs=1,
-    help="folder where the raw files from the scan are saved"
+    help="hdf5 file"
 )
 
 parser.add_argument(
     "--min_pixel",
     nargs='?',
-    default=1250,
+    default=0,
     type=int,
     help="first pixel"
 )
@@ -32,12 +33,12 @@ parser.add_argument(
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    folder = args.folder[0]
-    file_names = glob.glob(os.path.join(folder, "*.raw"))
-    #print(file_names)
-    datasets = np.vstack([np.loadtxt(file_name, dtype=np.int)[
-        args.min_pixel:args.max_pixel, 1]
-        for file_name in file_names])
+    file_name = args.file[0]
+    input_file = h5py.File(file_name, "r")
+    datasets = np.vstack(
+        [dataset[...]
+         for dataset in input_file["raw_images"].values()])
+    input_file.close()
     print(datasets)
     plt.figure()
     plt.imshow(datasets, interpolation="none", aspect='auto')
