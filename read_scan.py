@@ -36,10 +36,10 @@ if __name__ == '__main__':
     file_name = args.file[0]
     input_file = h5py.File(file_name, "r")
     datasets = np.vstack(
-        [dataset[...]
+        [dataset[args.min_pixel:args.max_pixel]
          for dataset in input_file["raw_images"].values()])
     input_file.close()
-    print(datasets)
+    print(datasets, np.max(datasets))
     plt.figure()
     plt.imshow(datasets, interpolation="none", aspect='auto')
     plt.tight_layout()
