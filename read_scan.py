@@ -39,7 +39,7 @@ if __name__ == '__main__':
         [dataset[args.min_pixel:args.max_pixel]
          for dataset in input_file["raw_images"].values()])
     input_file.close()
-    print(datasets, np.max(datasets))
+    print(datasets, np.max(datasets), np.sum(datasets))
     plt.figure()
     plt.imshow(datasets, interpolation="none", aspect='auto')
     plt.tight_layout()
