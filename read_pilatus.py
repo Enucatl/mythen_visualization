@@ -16,7 +16,7 @@ parser.add_argument(
 if __name__ == '__main__':
     args = parser.parse_args()
     file_name = args.file[0]
-    image = np.fromfile(file_name, dtype=np.int32).reshape((619, 487))
+    image = np.fromfile(file_name, dtype=np.int32).reshape((-1, 487))
     print(image)
     plt.figure()
     im_show = plt.imshow(image, interpolation="none", aspect='auto')
